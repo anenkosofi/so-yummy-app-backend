@@ -28,6 +28,7 @@ const recipeSchema = new Schema(
     },
     area: {
       type: String,
+      required: true,
     },
     instructions: {
       type: String,
@@ -98,6 +99,6 @@ const recipeSchema = new Schema(
   { timestamps: true }
 );
 
-const CommonRecipe = model("commonRecipe", recipeSchema);
+const CommonRecipe = model("commonrecipe", recipeSchema);
 
 module.exports = CommonRecipe;
