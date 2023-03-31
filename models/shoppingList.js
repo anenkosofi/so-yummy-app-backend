@@ -22,6 +22,6 @@ const shoppingListSchema = new Schema(
   { versionKey: false }
 );
 
-const ShoppingList = model("shoppingList", shoppingListSchema);
+const ShoppingList = model("shoppinglist", shoppingListSchema);
 
 module.exports = ShoppingList;
