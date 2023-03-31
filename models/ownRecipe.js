@@ -67,6 +67,6 @@ const recipeSchema = new Schema(
   { timestamps: true }
 );
 
-const Recipe = model("myrecipe", recipeSchema);
+const OwnRecipe = model("ownRecipe", recipeSchema);
 
-module.exports = Recipe;
+module.exports = OwnRecipe;
