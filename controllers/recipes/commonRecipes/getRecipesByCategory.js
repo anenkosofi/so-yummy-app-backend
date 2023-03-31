@@ -1,4 +1,4 @@
-const CommonRecipe = require("../../models");
+const { CommonRecipe } = require("../../../models");
 
 const getRecipesByCategory = async (req, res) => {
   const { category } = req.params;
