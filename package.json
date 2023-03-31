@@ -9,8 +9,8 @@
     "lint:fix": "eslint --fix **/*.js"
   },
   "engines": {
-    "npm": "8.18.0",
-    "node": "v18.15.0"
+    "npm": ">=9.6.3",
+    "node": ">=v18.15.0"
   },
   "dependencies": {
     "cors": "2.8.5",
