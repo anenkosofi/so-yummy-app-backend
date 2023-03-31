@@ -4,7 +4,7 @@ const shoppingListSchema = new Schema(
   {
     userId: {
       type: String,
-      required: true,
+      require: true,
     },
     ingredient: {
       type: String,
