@@ -4,19 +4,19 @@ const shoppingListSchema = new Schema(
   {
     userId: {
       type: String,
-      require: true,
+      required: true,
     },
     ingredient: {
       type: String,
-      require: true,
+      required: true,
     },
     measure: {
       type: String,
-      require: true,
+      required: true,
     },
     image: {
       type: String,
-      require: true,
+      required: true,
     },
   },
   { versionKey: false }
