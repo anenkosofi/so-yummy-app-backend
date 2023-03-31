@@ -1,7 +1,6 @@
 const { CommonRecipe } = require("../../../models");
 
 const getCategoryRecipes = async (req, res) => {
-  console.log(CommonRecipe);
   const breakfastRecipes = await CommonRecipe.find({ category: "Breakfast" });
   breakfastRecipes.splice(4);
   const miscellaneousRecipes = await CommonRecipe.find({
