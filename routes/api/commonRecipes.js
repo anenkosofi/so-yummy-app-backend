@@ -7,11 +7,11 @@ const { authenticate, validateId } = require("../../middlewares");
 
 const router = express.Router();
 
-router.get("/category-list", categories.getCategoriesList);
+router.get("/category-list", authenticate, categories.getCategoriesList);
 
-router.get("/main-page", commonRecipes.getCategoryRecipes);
+router.get("/main-page", authenticate, commonRecipes.getCategoryRecipes);
 
-router.get("/:category", commonRecipes.getRecipesByCategory);
+router.get("/:category", authenticate, commonRecipes.getRecipesByCategory);
 
 router.get("/title/:query", authenticate, commonRecipes.getRecipesByTitle);
 
