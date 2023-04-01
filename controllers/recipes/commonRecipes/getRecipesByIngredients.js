@@ -1,28 +1,29 @@
-const { Recipe } = require("../../../models/commonRecipe");
+// search/ingredient/query
+
+const CommonRecipe = require("../../../models/commonRecipe");
 const {
-  getSkipLimitPage,
-  getRegexForSearchByTitleAndIngredient,
   getFacetObject,
   getSortTypeByTitleOrPopularity,
   processPagedRecipesResult,
 } = require("../../../helpers");
+const getSkipLimitPage = require("../../../helpers/getSkipLimitPage");
 
-const searchByIngredient = async (req, res) => {
+const getRecipesByIngredients = async (req, res) => {
   const { query } = req.params;
-  const regex = getRegexForSearchByTitleAndIngredient(query);
+  console.log(query);
 
-  const userId = req.user._id;
+  const regex = new RegExp(query.trim().toLowerCase(), "i");
 
-  const { page: sPage = 1, limit: sLimit = 12, sort: sSort } = req.query;
+  const userId = req.user.id;
+
+  const { page: sPage = 1, limit: sLimit = 12 } = req.query;
 
   const { skip, limit, page } = getSkipLimitPage({
     page: sPage,
     limit: sLimit,
   });
 
-  const { sortOpts, sort } = getSortTypeByTitleOrPopularity(sSort);
-
-  const result = await Recipe.aggregate([
+  const result = await CommonRecipe.aggregate([
     {
       $lookup: {
         from: "ingredients",
@@ -37,13 +38,12 @@ const searchByIngredient = async (req, res) => {
       },
     },
     {
-      ...getFacetObject({ sortOpts, skip, limit }),
+      $skip: skip,
+    },
+    {
+      $limit: limit,
     },
   ]);
-
-  const response = processPagedRecipesResult({ result, userId });
-
-  res.json({ ...response, page, limit, sort });
+  res.json({ data: result, userId, page, limit });
 };
-
-module.exports = searchByIngredient;
+module.exports = getRecipesByIngredients;
