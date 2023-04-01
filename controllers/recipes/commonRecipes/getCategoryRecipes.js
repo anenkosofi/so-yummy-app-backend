@@ -1,16 +1,31 @@
 const { CommonRecipe } = require("../../../models");
 
 const getCategoryRecipes = async (req, res) => {
-  const breakfastRecipes = await CommonRecipe.find({ category: "Breakfast" });
-  breakfastRecipes.splice(4);
-  const miscellaneousRecipes = await CommonRecipe.find({
-    category: "Miscellaneous",
+  const { limit = 4 } = req.query;
+  // How many recipes front get depending on window width
+  const recipes = await CommonRecipe.find({
+    category: ["Breakfast", "Miscellaneous", "Chicken", "Dessert"],
   });
-  miscellaneousRecipes.splice(4);
-  const chickenRecipes = await CommonRecipe.find({ category: "Chicken" });
-  chickenRecipes.splice(4);
-  const dessertsRecipes = await CommonRecipe.find({ category: "Dessert" });
-  dessertsRecipes.splice(4);
+
+  const breakfastRecipes = recipes.filter(
+    (recipe) => recipe.category === "Breakfast"
+  );
+  breakfastRecipes.splice(limit);
+
+  const miscellaneousRecipes = recipes.filter(
+    (recipe) => recipe.category === "Miscellaneous"
+  );
+  miscellaneousRecipes.splice(limit);
+
+  const chickenRecipes = recipes.filter(
+    (recipe) => recipe.category === "Chicken"
+  );
+  chickenRecipes.splice(limit);
+
+  const dessertsRecipes = recipes.filter(
+    (recipe) => recipe.category === "Dessert"
+  );
+  dessertsRecipes.splice(limit);
 
   res.json({
     status: "success",
