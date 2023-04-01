@@ -13,4 +13,8 @@ router.get("/main-page", authenticate, commonRecipes.getCategoryRecipes);
 
 router.get("/:category", authenticate, commonRecipes.getRecipesByCategory);
 
+router.get("/category/:category", commonRecipes.getRecipesByCategory);
+
+router.get("/:id", commonRecipes.getRecipeById);
+
 module.exports = router;

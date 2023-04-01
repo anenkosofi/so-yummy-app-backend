@@ -47,3 +47,4 @@ const getRecipesByIngredients = async (req, res) => {
   res.json({ data: result, userId, page, limit });
 };
 module.exports = getRecipesByIngredients;
+
