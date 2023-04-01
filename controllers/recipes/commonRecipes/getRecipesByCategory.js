@@ -1,5 +1,4 @@
 const { CommonRecipe } = require("../../../models");
-const { HttpError } = require("../../../helpers");
 
 const getRecipesByCategory = async (req, res) => {
   const { category } = req.params;
