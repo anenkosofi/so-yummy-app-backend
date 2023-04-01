@@ -1,4 +1,4 @@
-// search/ingredient/query
+// http://localhost:8080/api/search/ingredient/salmon
 
 const CommonRecipe = require("../../../models/commonRecipe");
 const {
