@@ -1,23 +1,19 @@
 // http://localhost:8080/api/search/ingredient/salmon
 
-const CommonRecipe = require("../../../models/commonRecipe");
-const {
-  getFacetObject,
-  getSortTypeByTitleOrPopularity,
-  processPagedRecipesResult,
-} = require("../../../helpers");
+const { HttpError } = require("../../../helpers");
 const getSkipLimitPage = require("../../../helpers/getSkipLimitPage");
+const CommonRecipe = require("../../../models/commonRecipe");
 
 const getRecipesByIngredients = async (req, res) => {
   const { query } = req.params;
-  console.log(query);
+  if (!query) {
+    throw HttpError(400);
+  }
 
   const regex = new RegExp(query.trim().toLowerCase(), "i");
-
   const userId = req.user.id;
 
   const { page: sPage = 1, limit: sLimit = 12 } = req.query;
-
   const { skip, limit, page } = getSkipLimitPage({
     page: sPage,
     limit: sLimit,
@@ -44,7 +40,9 @@ const getRecipesByIngredients = async (req, res) => {
       $limit: limit,
     },
   ]);
-  res.json({ data: result, userId, page, limit });
-};
-module.exports = getRecipesByIngredients;
+  res.json({ data: result, userId, skip, page, limit });
 
+  console.log(req.query);
+};
+
+module.exports = getRecipesByIngredients;
