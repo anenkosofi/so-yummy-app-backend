@@ -1,8 +1,6 @@
-// http://localhost:8080/api/search/title/query
+const { HttpError, getSkipLimitPage } = require("../../../helpers");
 
 const CommonRecipe = require("../../../models/commonRecipe");
-const { HttpError } = require("../../../helpers");
-const getSkipLimitPage = require("../../../helpers/getSkipLimitPage");
 
 const getRecipesByTitle = async (req, res) => {
   const { query } = req.params;
