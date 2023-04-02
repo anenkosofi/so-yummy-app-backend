@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose"); 
 const Joi = require("joi");
-// const bcryptjs = require("bcryptjs");
 const {mongooseErrorHandler} = require("../helpers"); 
 
 const nameRegExp = /^(?:[\p{L}\p{M}]+(?:[ '-][\p{L}\p{M}]+)*|\d+)$/u;
@@ -27,9 +26,17 @@ const userSchema = new Schema({
         type: String,
         required: [true, 'Set password for user'],
     },
-    token: {
+     accessToken: {
         type: String,
         default: null,
+    },
+    refreshToken: {
+        type: String,
+    },
+    avatarURL: {
+        type: String,
+        required: false,
+        default: '',
     },
 
 },
@@ -57,10 +64,23 @@ const joiLoginSchema = Joi.object({
     password: Joi.string().required(),
 });
 
+const refreshSchema = Joi.object({
+    refreshToken: Joi.string().required(),
+});
+
+const updateUserSchema = Joi.object().keys({
+  name: Joi.string(),
+  avatar: Joi.binary(),
+});
+
+
+
 const User = model("user", userSchema); 
 
 module.exports = {
     User, 
     joiRegisterSchema, 
     joiLoginSchema,
+    refreshSchema, 
+    updateUserSchema
 }
