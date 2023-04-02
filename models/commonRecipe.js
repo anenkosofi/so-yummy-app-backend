@@ -2,8 +2,7 @@ const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
 const addFavoriteSchema = Joi.object({
-  title: Joi.string().required(),
-  favorite: Joi.boolean().optional(),
+  favorite: Joi.string().required(),
 });
 
 const recipeSchema = new Schema(

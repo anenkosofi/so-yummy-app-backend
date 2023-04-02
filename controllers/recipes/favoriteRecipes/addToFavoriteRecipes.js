@@ -1,19 +1,14 @@
-const { CommonRecipe } = require("../../../models");
+// const { CommonRecipe } = require("../../../models");
 const { User } = require("../../../models");
 const { HttpError } = require("../../../helpers");
 
 const addToFavoriteRecipes = async (req, res) => {
-  const { id } = req.params;
+  const { favorite } = req.body;
   const { _id: owner } = req.user;
-
-  const recipe = await CommonRecipe.findById({ _id: id });
-  if (!recipe) {
-    throw HttpError(404, "Not Found");
-  }
 
   const user = await User.findOneAndUpdate(
     { _id: owner },
-    { $push: { favorites: recipe } },
+    { $push: { favorites: favorite } },
     { new: true }
   );
   if (!user) {
