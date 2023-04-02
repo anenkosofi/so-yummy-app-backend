@@ -47,7 +47,7 @@ const userSchema = new Schema(
       type: [
         {
           type: Schema.Types.ObjectId,
-          ref: "commonRecipe",
+          ref: "commonrecipe",
         },
       ],
       required: true,
