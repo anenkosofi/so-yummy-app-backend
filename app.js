@@ -7,6 +7,7 @@ const authRouter = require("./routes/api/users");
 const ingredientsRouter = require("./routes/api/ingredients");
 const commonRecipesRouter = require("./routes/api/commonRecipes");
 const popularRecipesRouter = require("./routes/api/popularRecipes");
+const favoriteRecipesRouter = require("./routes/api/favoriteRecipes");
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/api/users", authRouter);
 app.use("/api/ingredients", ingredientsRouter);
 app.use("/api/recipes", commonRecipesRouter);
 app.use("/api/popular-recipe", popularRecipesRouter);
+app.use("/api/favorite", favoriteRecipesRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
