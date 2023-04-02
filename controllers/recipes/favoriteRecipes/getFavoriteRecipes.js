@@ -7,7 +7,7 @@ const getFavoriteRecipes = async (req, res) => {
   const result = await User.find({ _id: owner }, "favorites", {
     skip,
     limit,
-  });
+  }).populate("favorites", "_id title description thumb time");
   res.json(result);
 };
 
