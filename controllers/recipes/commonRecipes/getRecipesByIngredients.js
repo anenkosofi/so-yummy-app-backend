@@ -1,7 +1,11 @@
-// http://localhost:8080/api/search/ingredient/salmon
-
 const { HttpError } = require("../../../helpers");
 const getSkipLimitPage = require("../../../helpers/getSkipLimitPage");
+const {
+  getFacetObject,
+  getSortTypeByTitleOrPopularity,
+  processPagedRecipesResult,
+} = require("../../../helpers");
+
 const CommonRecipe = require("../../../models/commonRecipe");
 
 const getRecipesByIngredients = async (req, res) => {
@@ -13,11 +17,12 @@ const getRecipesByIngredients = async (req, res) => {
   const regex = new RegExp(query.trim().toLowerCase(), "i");
   const userId = req.user.id;
 
-  const { page: sPage = 1, limit: sLimit = 12 } = req.query;
+  const { page: sPage = 1, limit: sLimit = 12, sort: sSort } = req.query;
   const { skip, limit, page } = getSkipLimitPage({
     page: sPage,
     limit: sLimit,
   });
+  const { sortOpts, sort } = getSortTypeByTitleOrPopularity(sSort);
 
   const result = await CommonRecipe.aggregate([
     {
@@ -33,14 +38,26 @@ const getRecipesByIngredients = async (req, res) => {
         "ingredients.ttl": { $regex: regex },
       },
     },
+    // {
+    //   $skip: skip,
+    // },
+    // {
+    //   $limit: limit,
+    // },
     {
-      $skip: skip,
-    },
-    {
-      $limit: limit,
+      ...getFacetObject({ sortOpts, skip, limit }),
     },
   ]);
-  res.json({ data: result, userId, skip, page, limit });
+  const response = processPagedRecipesResult({ result, userId });
+
+  res.json({
+    // data: result,
+    ...response,
+    skip,
+    page,
+    limit,
+    sort,
+  });
 
   console.log(req.query);
 };

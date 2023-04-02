@@ -9,7 +9,7 @@ const router = express.Router();
 // http://localhost:8080/api/search/title/beef?page=4&limit=1
 router.get("/title/:query", authenticate, commonRecipes.getRecipesByTitle);
 
-// http://localhost:8080/api/search/ingredient/query
+// http://localhost:8080/api/search/ingredient/beef?page=4&$limit=12&sort=title
 router.get(
   "/ingredient/:query",
   authenticate,

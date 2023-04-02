@@ -6,8 +6,10 @@ const getSkipLimitPage = require("../../../helpers/getSkipLimitPage");
 
 const getRecipesByTitle = async (req, res) => {
   const { query } = req.params;
+  const { title } = req.body;
 
   console.log(req.query);
+  console.log(req.body, title);
 
   if (!query) {
     throw HttpError(400);
