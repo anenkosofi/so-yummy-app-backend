@@ -3,7 +3,7 @@ const { Unauthorized } = require('http-errors');
 const bcrypt = require('bcryptjs'); 
 const jwt = require('jsonwebtoken'); 
 
-const { PASSWORD } = process.env; 
+const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env; 
 
 const login = async (req, res) => {
     const body = req.body;
@@ -20,11 +20,13 @@ const login = async (req, res) => {
     const payload = {
         id: user._id,
     };
-    const token = jwt.sign(payload, PASSWORD, { expiresIn: '23h' });
-    await User.findByIdAndUpdate(user._id, { token });
+    const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, { expiresIn: '2h' });
+    const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, { expiresIn: '7d' });
+    await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
     res.status(201).json({
         status: 'success',
-        token,
+        accessToken,
+        refreshToken,
         user: {
             id: user._id,
             name: user.name,
@@ -32,6 +34,6 @@ const login = async (req, res) => {
     
         },
     });
-};
+}; 
 
 module.exports = login; 

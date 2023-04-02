@@ -1,5 +1,8 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
+
+const { mongooseErrorHandler } = require("../helpers");
+
 // const bcryptjs = require("bcryptjs");
 const { mongooseErrorHandler } = require("../helpers");
 
@@ -27,9 +30,17 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Set password for user"],
     },
-    token: {
+    accessToken: {
       type: String,
       default: null,
+    },
+    refreshToken: {
+      type: String,
+    },
+    avatarURL: {
+      type: String,
+      required: false,
+      default: "",
     },
     subscribed: {
       type: Boolean,
@@ -41,7 +52,20 @@ const userSchema = new Schema(
       required: false,
       default: "",
     },
+    token: {
+      type: String,
+      default: null,
+    },
   },
+   favorites: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "commonrecipe",
+        },
+      ],
+      required: true,
+    },
   { versionKey: false, timestamps: true }
 );
 
@@ -71,10 +95,21 @@ const joiLoginSchema = Joi.object({
   password: Joi.string().required(),
 });
 
+const refreshSchema = Joi.object({
+  refreshToken: Joi.string().required(),
+});
+
+const updateUserSchema = Joi.object().keys({
+  name: Joi.string(),
+  avatar: Joi.binary(),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
   User,
   joiRegisterSchema,
   joiLoginSchema,
+  refreshSchema,
+  updateUserSchema,
 };
