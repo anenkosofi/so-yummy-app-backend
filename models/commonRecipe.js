@@ -1,4 +1,10 @@
 const { Schema, model } = require("mongoose");
+const Joi = require("joi");
+
+const addFavoriteSchema = Joi.object({
+  title: Joi.string().required(),
+  favorite: Joi.boolean().optional(),
+});
 
 const recipeSchema = new Schema(
   {
@@ -101,4 +107,7 @@ const recipeSchema = new Schema(
 
 const CommonRecipe = model("commonrecipe", recipeSchema);
 
-module.exports = CommonRecipe;
+module.exports = {
+  CommonRecipe,
+  addFavoriteSchema,
+};
