@@ -2,7 +2,7 @@ const { ShoppingList } = require("../../models");
 
 const deleteIngridients = async (req, res) => {
   const { userId } = req.params;
-  const result = await Shopping.findByIdAndRemove(userId);
+  const result = await ShoppingList.findByIdAndRemove(userId);
     res.json({
       status: "success",
       code: 200,
