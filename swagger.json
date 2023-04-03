@@ -52,6 +52,62 @@
           }
         }
       }
+    },
+    "/users/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Login user into the system",
+        "parameters": [],
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout a user by invalidating their access and refresh tokens",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "204": {
+            "description": "User successfully logged out",
+            "content": {}
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
@@ -79,6 +135,56 @@
       "RegistrationResponse": {
         "type": "object",
         "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "The JWT access token"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "The JWT refresh token"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User's name"
+          },
           "name": {
             "type": "string",
             "description": "User's name"
