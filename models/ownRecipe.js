@@ -1,4 +1,9 @@
 const { Schema, model } = require("mongoose");
+const Joi = require("joi"); 
+
+const addOwnSchema = Joi.object({
+  owner: Joi.string().required(),
+});
 
 // schema for adding own recipes
 
@@ -69,4 +74,4 @@ const recipeSchema = new Schema(
 
 const OwnRecipe = model("ownRecipe", recipeSchema);
 
-module.exports = OwnRecipe;
+module.exports = {OwnRecipe, addOwnSchema};

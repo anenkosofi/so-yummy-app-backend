@@ -1,17 +1,19 @@
 const express = require("express");
+const router = express.Router();
+
 const { ownRecipes } = require("../../controllers");
 const { authenticate } = require("../../middlewares");
 const { validation } = require("../../middlewares");
+const {addOwnSchema} = require("../../models/ownRecipe")
 
 
-const router = express.Router();
 
-router.get("/", authenticate,ownRecipes.getAllRecipes);
+router.get("/", authenticate, ownRecipes.getAllRecipes);
 
 router.post(
     "/",
     authenticate,
-    validation(),
+    validation(addOwnSchema),
     ownRecipes.addRecipe
   );
 
