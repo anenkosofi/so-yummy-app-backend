@@ -1,4 +1,4 @@
-const { OwnRecipe } = require("../../../models");
+const { OwnRecipe } = require("../../../models/ownRecipe");
 
 const getAllRecipes = async (req, res) => {
   const { _id: owner } = req.user;

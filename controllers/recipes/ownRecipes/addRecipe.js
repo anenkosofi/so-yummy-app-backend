@@ -1,4 +1,4 @@
-const { OwnRecipe } = require("../../../models");
+const { OwnRecipe } = require("../../../models/ownRecipe");
 const { HttpError } = require("../../../helpers");
 
 const addRecipe = async (req, res) => {
