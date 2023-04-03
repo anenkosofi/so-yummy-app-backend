@@ -1,7 +1,7 @@
 const express = require("express"); 
 
 const { auth: controllers } = require("../../controllers");
-const { authenticate, validation, passport, uploadCloud } = require("../../middlewares");
+const { authenticate, validation, passport, upload} = require("../../middlewares");
 const { joiRegisterSchema, joiLoginSchema, refreshSchema, updateUserSchema } = require("../../models");
 
 const router = express.Router(); 
@@ -19,6 +19,6 @@ router.get("/google/callback", passport.authenticate("google", { session: false 
 
 // user routes
 router.get("/current", authenticate, controllers.getCurrent);
-router.patch("/update", uploadCloud.single("avatar"), validation(updateUserSchema), controllers.updateUser ) 
+router.patch("/update", authenticate, upload.single("avatar"), validation(updateUserSchema), controllers.updateUser);
 
 module.exports = router; 
