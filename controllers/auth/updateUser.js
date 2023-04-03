@@ -1,21 +1,23 @@
 const { User } = require("../../models");
+const {cloudinaryUpload } = require("../../middlewares");
+
 
 const updateUser = async (req, res) => {
-    const { _id, name } = req.body;
-    const newAvatarUrl = req.file.path;
-    if (!name) {
-        await User.findByIdAndUpdate(_id, {
-            avatarURL: newAvatarUrl,
-        });
-        res.json({
-            newAvatarUrl,
-        });
-    }
-    await User.findByIdAndUpdate(_id, { avatarURL: newAvatarUrl, name }, { new: true });
-    res.json({
-        name,
-        newAvatarUrl,
-    });
+    const { _id } = req.user; 
+    const { name } = req.body; 
+    const { path, filename } = req.file;
+    
+    const avatarURL = await cloudinaryUpload(filename, path);
 
-}; 
-module.exports = updateUser
+  const user = await User.findByIdAndUpdate(_id, { avatarURL, name });
+    res.json({
+        accessToken: user.accessToken,
+        user: {
+             name,
+            avatarURL,
+        }
+    });
+};
+
+module.exports = updateUser; 
+    

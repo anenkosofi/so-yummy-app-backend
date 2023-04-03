@@ -2,12 +2,13 @@ const validation = require("./validateBody");
 const authenticate = require("./authenticate");
 const validateId = require("./validateId");
 const passport = require("./googleAuthenticate");
-const uploadCloud = require("./uploadCloud");
-
+const cloudinaryUpload = require("./uploadCloud");
+const upload = require('./upload');
 module.exports = {
-  validation,
-  authenticate,
-  validateId,
-  passport,
-  uploadCloud,
-};
+    validation,
+    authenticate,
+    validateId,
+    passport,
+    upload,
+    cloudinaryUpload
+}; 

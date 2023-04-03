@@ -16,6 +16,7 @@ const authenticate = async (req, res, next) => {
         if (!user || !user.accessToken) {
             throw new Unauthorized("User is not authorized");
         }
+        
         req.user = user;
         next();
     } catch (error) {
@@ -27,3 +28,4 @@ const authenticate = async (req, res, next) => {
 };
 
 module.exports = authenticate; 
+
