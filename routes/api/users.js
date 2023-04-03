@@ -1,24 +1,54 @@
-const express = require("express"); 
+const express = require("express");
 
 const { auth: controllers } = require("../../controllers");
-const { authenticate, validation, passport, upload} = require("../../middlewares");
-const { joiRegisterSchema, joiLoginSchema, refreshSchema, updateUserSchema } = require("../../models");
+const {
+  authenticate,
+  validation,
+  passport,
+  upload,
+} = require("../../middlewares");
+const {
+  joiRegisterSchema,
+  joiLoginSchema,
+  refreshSchema,
+  updateUserSchema,
+} = require("../../models");
 
-const router = express.Router(); 
+const router = express.Router();
+const schema = require("../../schemas/");
 
 // auth routes
-router.post("/register", validation(joiRegisterSchema), controllers.register); 
-router.post("/login", validation(joiLoginSchema), controllers.login); 
-router.post("/logout", authenticate, controllers.logout); 
-router.post("/refresh", validation(refreshSchema), controllers.refresh); 
+router.post("/register", validation(joiRegisterSchema), controllers.register);
+router.post("/login", validation(joiLoginSchema), controllers.login);
+router.post("/logout", authenticate, controllers.logout);
+router.post("/refresh", validation(refreshSchema), controllers.refresh);
 
-// google auth 
-router.get("/google", passport.authenticate("google", { scope: ["email", "profile"] }));
-router.get("/google/callback", passport.authenticate("google", { session: false }), controllers.googleAuth); 
-
+// google auth
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["email", "profile"] })
+);
+router.get(
+  "/google/callback",
+  passport.authenticate("google", { session: false }),
+  controllers.googleAuth
+);
 
 // user routes
 router.get("/current", authenticate, controllers.getCurrent);
-router.patch("/update", authenticate, upload.single("avatar"), validation(updateUserSchema), controllers.updateUser);
+router.patch(
+  "/update",
+  authenticate,
+  upload.single("avatar"),
+  validation(updateUserSchema),
+  controllers.updateUser
+);
+router.get("/subscribe", authenticate, controllers.addSubscription);
+router.post(
+  "/subscribe",
+  authenticate,
+  validation(schema.subscribeUser),
+  controllers.sendSubscriptionEmail
+);
 
-module.exports = router; 
+module.exports = router;
