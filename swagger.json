@@ -108,6 +108,44 @@
           }
         }
       }
+    },
+    "/users/refresh": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Refresh Access Token",
+        "parameters": [],
+        "requestBody": {
+          "description": "Use refresh token to generate a new access token",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RefreshRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A new access token has been generated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Your token is invalid",
+            "content": {}
+          },
+          "403": {
+            "description": "Access Denied. Please try logging in again",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
@@ -175,6 +213,32 @@
           },
           "user": {
             "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "RefreshRequest": {
+        "type": "object",
+        "required": ["refreshToken"],
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "description": "The JWT refresh token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MmEyYWU0NWY0ZGViYWUwZDRjOWYxNSIsImlhdCI6MTY4MDUzMzUxNiwiZXhwIjoxNjgxMTM4MzE2fQ.X9I-RSyshKuQybxosstF3wgIfA-QXnXgfyGcQUbRTKw"
+          }
+        }
+      },
+      "RefreshResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "The JWT access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODliYmYwYjk5MTg2M2QzNmM0ZjJhZiIsImlhdCI6MTYyMDk3MTg3MSwiZXhwIjoxNjIwOTc1NDcxfQ.UuuhN59Gsi7VvLdI6W8VnEKub74veSMiVv4QF4W4XQg"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "The JWT refresh token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODliYmYwYjk5MTg2M2QzNmM0ZjJhZiIsImlhdCI6MTYyMDk3MTg3MSwiZXhwIjoxNjIwOTc1NDcxfQ.UuuhN59Gsi7VvLdI6W8VnEKub74veSMiVv4QF4W4XQg"
           }
         }
       },
