@@ -6,6 +6,7 @@ const logout = require("./logout");
 const googleAuth = require("./googleAuth"); 
 const refresh = require("./refresh");
 const updateUser = require("./updateUser"); 
+const updateAvatarToCloud = require("./updateCloudAvatar");
 
 const getCurrent = require("./getCurrentUser");
 
@@ -17,4 +18,5 @@ module.exports = {
     googleAuth: ctrl(googleAuth), 
     refresh: ctrl(refresh), 
     updateUser: ctrl(updateUser), 
+    updateAvatarToCloud: ctrl(updateAvatarToCloud),
 }; 

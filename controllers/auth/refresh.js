@@ -1,17 +1,22 @@
 const jwt = require("jsonwebtoken");
-const { Forbidden } = require('http-errors');
+const { Forbidden, BadRequest } = require('http-errors');
 const { User } = require("../../models");
 
 const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
 
-const refresh = async (req, res) => {
+const refresh = async (req, res, next) => {
     const { refreshToken: token } = req.body;
     try {
         const { id } = jwt.verify(token, REFRESH_SECRET_KEY);
-        const isValid = await User.findOne({ refreshToken: token });
-        if (!isValid) {
-            throw new Forbidden("Your token is invalid")
+        const user = await User.findById(id);
+        if (user.refreshToken !== token) {
+            throw new BadRequest("Your token is invalid")
+            
         }
+        // const isValid = await User.findOne({ refreshToken: token });
+        // if (!isValid) {
+        //     throw new Forbidden("Your token is invalid")
+        // }
 
         const payload = {
             id,

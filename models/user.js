@@ -3,8 +3,6 @@ const Joi = require("joi");
 
 const { mongooseErrorHandler } = require("../helpers");
 
-// const bcryptjs = require("bcryptjs");
-
 const nameRegExp = /^(?:[\p{L}\p{M}]+(?:[ '-][\p{L}\p{M}]+)*|\d+)$/u;
 const emailRegExp = /^\w+([.-]?\w+){2}@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 const passwordRegExp = /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&*]+$/;
@@ -41,7 +39,7 @@ const userSchema = new Schema(
       type: String,
       required: false,
       default: "",
-    },
+        },
 
     favorites: {
       type: [
@@ -88,7 +86,7 @@ const refreshSchema = Joi.object({
 
 const updateUserSchema = Joi.object().keys({
   name: Joi.string(),
-  avatar: Joi.binary(),
+  avatarURL: Joi.string(),
 });
 
 const User = model("user", userSchema);
