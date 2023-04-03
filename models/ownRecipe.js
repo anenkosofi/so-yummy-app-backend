@@ -1,17 +1,5 @@
 const { Schema, model } = require("mongoose");
 
-// I am not sure aboy this schema, may be there is someyhing to add
-// const ingredientSchema = new Schema({
-//   title: {
-//     type: String,
-//     required: true,
-//   },
-//   quantity: {
-//     type: String,
-//     required: true,
-//   },
-// });
-
 // schema for adding own recipes
 
 const recipeSchema = new Schema(
