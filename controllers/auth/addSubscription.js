@@ -19,5 +19,4 @@ const addSubscription = async (req, res) => {
     },
   });
 };
-
 module.exports = addSubscription;
