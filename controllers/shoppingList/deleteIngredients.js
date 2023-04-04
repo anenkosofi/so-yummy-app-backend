@@ -1,16 +1,20 @@
 const { ShoppingList } = require("../../models");
+const { HttpError } = require("../../helpers");
 
-const deleteIngridients = async (req, res) => {
-  const { userId } = req.params;
-  const result = await ShoppingList.findByIdAndRemove(userId);
-    res.json({
-      status: "success",
-      code: 200,
-      data: {
-        result,
-      },
-    })
-}
+const deleteIngredients = async (req, res) => {
+  const { _id: owner } = req.user;
+  const { id } = req.params;
 
+  const ingredient = await ShoppingList.findByIdAndRemove({ _id: id, owner });
 
-module.exports = deleteIngridients;
+  if (!ingredient) {
+    throw HttpError(404, `Contact with id=${id} is not found`);
+  }
+  res.json({
+    status: "success",
+    code: 200,
+    ingredient,
+  });
+};
+
+module.exports = deleteIngredients;

@@ -1,17 +1,19 @@
-const { OwnRecipe } = require("../../../models/ownRecipe");
-const { HttpError } = require("../../../helpers");
+const { OwnRecipe } = require("../../../models");
 
 const addRecipe = async (req, res) => {
-
   const { _id: owner } = req.user;
 
-  const user = await OwnRecipe.create(
-    { ...req.body, _id: owner, new: true });
-  if (!user) {
-    throw HttpError(404, "Not Found");
-  }
+  const newRecipe = await OwnRecipe.create({
+    ...req.body,
+    owner,
+    new: true,
+  });
 
-  res.status(201).json({ message: "Recipe added successfully" });
+  res.status(201).json({
+    status: "success",
+    code: 201,
+    recipe: newRecipe,
+  });
 };
 
 module.exports = addRecipe;

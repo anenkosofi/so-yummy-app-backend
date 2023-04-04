@@ -5,7 +5,7 @@ const commonRecipes = require("./recipes/commonRecipes");
 const popularRecipes = require("./recipes/popularRecipes");
 const favoriteRecipes = require("./recipes/favoriteRecipes");
 const searchedRecipes = require("./recipes/search");
-// const ingredients = require("./ingredients");
+const ownRecipes = require("./recipes/ownRecipes");
 const shoppingList = require("./shoppingList");
 
 module.exports = {
@@ -16,5 +16,6 @@ module.exports = {
   popularRecipes,
   favoriteRecipes,
   searchedRecipes,
-  shoppingList
+  ownRecipes,
+  shoppingList,
 };

@@ -1,15 +1,18 @@
 const { ShoppingList } = require("../../models");
 
-const addIngridients = async (req, res) => {
+const addIngredients = async (req, res) => {
+  const { _id: owner } = req.user;
 
-  const ingredient = await ShoppingList.create(req.body);
-  res.json({
-      status: "success",
-      code: 200,
-      data: {
-        ingredient,
-      },
-     })
-}
+  const ingredients = await ShoppingList.create({
+    ...req.body,
+    owner,
+  });
 
-module.exports = addIngridients;
+  res.status(201).json({
+    status: "success",
+    code: 201,
+    ingredients,
+  });
+};
+
+module.exports = addIngredients;

@@ -1,11 +1,11 @@
 const { ctrl } = require("../../helpers");
 
-const addIngridients = require("./getCategoriesList");
-const deleteIngridients = require("./deleteIngridients");
-const getIngridients = require("./getIngridients");
+const addIngredients = require("./addIngredients");
+const deleteIngredients = require("./deleteIngredients");
+const getIngredients = require("./getIngredients");
 
 module.exports = {
-  addIngridients: ctrl(addIngridients),
-  addIngridients: ctrl(deleteIngridients),
-  getIngridients: ctrl(getIngridients),
+  addIngredients: ctrl(addIngredients),
+  deleteIngredients: ctrl(deleteIngredients),
+  getIngredients: ctrl(getIngredients),
 };

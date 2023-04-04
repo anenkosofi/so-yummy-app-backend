@@ -6,8 +6,9 @@ const {
   updateUserSchema,
 } = require("./user");
 const { CommonRecipe, addFavoriteSchema } = require("./commonRecipe");
-const OwnRecipe = require("./ownRecipe");
+const { OwnRecipe, addOwnSchema } = require("./ownRecipe");
 const Ingredient = require("./ingredient");
+const { ShoppingList, addIngredientsSchema } = require("./shoppingList");
 
 module.exports = {
   User,
@@ -16,7 +17,10 @@ module.exports = {
   refreshSchema,
   updateUserSchema,
   CommonRecipe,
-  OwnRecipe,
-  Ingredient,
   addFavoriteSchema,
+  OwnRecipe,
+  addOwnSchema,
+  Ingredient,
+  ShoppingList,
+  addIngredientsSchema,
 };

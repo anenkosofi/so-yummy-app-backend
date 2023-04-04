@@ -1,14 +1,15 @@
 const { ShoppingList } = require("../../models");
 
-const getIngridients = async (req, res) => {
-  const result = await ShoppingList.find({}, "-createdAt, -updatedAt");
-  res.json({
-      status: "success",
-      code: 200,
-      data: {
-        result,
-      },
-  });
-}
+const getIngredients = async (req, res) => {
+  const { _id: owner } = req.user;
 
-module.exports = getIngridients;
+  const ingredients = await ShoppingList.find({ owner }).populate("ingredient");
+
+  res.json({
+    status: "success",
+    code: 200,
+    ingredients,
+  });
+};
+
+module.exports = getIngredients;

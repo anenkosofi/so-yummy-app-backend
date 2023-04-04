@@ -1,20 +1,18 @@
 const { Schema, model } = require("mongoose");
+const Joi = require("joi");
+
+const addIngredientsSchema = Joi.object({
+  ingredient: Joi.string().required(),
+  measure: Joi.string().required(),
+});
 
 const shoppingListSchema = new Schema(
   {
-    userId: {
-      type: String,
-      required: true,
-    },
     ingredient: {
-      type: String,
-      required: true,
+      type: Schema.Types.ObjectId,
+      ref: "ingredient",
     },
     measure: {
-      type: String,
-      required: true,
-    },
-    image: {
       type: String,
       required: true,
     },
@@ -28,4 +26,7 @@ const shoppingListSchema = new Schema(
 
 const ShoppingList = model("shoppinglist", shoppingListSchema);
 
-module.exports = ShoppingList;
+module.exports = {
+  ShoppingList,
+  addIngredientsSchema,
+};
