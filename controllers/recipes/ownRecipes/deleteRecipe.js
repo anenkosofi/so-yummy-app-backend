@@ -5,7 +5,7 @@ const deleteRecipe = async (req, res) => {
     const { _id: owner } = req.user;
     const { id } = req.params;
   
-    const result = await OwnRecipe.deleteOne(
+    const result = await OwnRecipe.findByIdAndRemove(
       { _id:id , owner },
       
     );
