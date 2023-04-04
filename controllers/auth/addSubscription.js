@@ -10,7 +10,7 @@ const addSubscription = async (req, res) => {
       select: "-password -subscriptionToken",
     }
   );
-  res.json({
+  res.status(200).json({
     user: {
       id: user._id,
       name: user.name,

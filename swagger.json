@@ -37,7 +37,12 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RegistrationResponse"
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/RegistrationUser"
+                    }
+                  }
                 }
               }
             }
@@ -48,6 +53,10 @@
           },
           "409": {
             "description": "Provided email already exists",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
             "content": {}
           }
         }
@@ -83,6 +92,10 @@
           "401": {
             "description": "Email or password is wrong",
             "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
           }
         }
       }
@@ -104,6 +117,10 @@
           },
           "404": {
             "description": "User not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
             "content": {}
           }
         }
@@ -143,6 +160,10 @@
           "403": {
             "description": "Access Denied. Please try logging in again",
             "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
           }
         }
       }
@@ -161,12 +182,8 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "status": {
-                      "type": "string",
-                      "example": "success"
-                    },
                     "user": {
-                      "$ref": "#/components/schemas/User"
+                      "$ref": "#/components/schemas/CurrentUser"
                     }
                   }
                 }
@@ -179,6 +196,10 @@
           },
           "404": {
             "description": "User not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
             "content": {}
           }
         }
@@ -214,7 +235,7 @@
                       "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmODliYmYwYjk5MTg2M2QzNmM0ZjJhZiIsImlhdCI6MTYyMDk3MTg3MSwiZXhwIjoxNjIwOTc1NDcxfQ.UuuhN59Gsi7VvLdI6W8VnEKub74veSMiVv4QF4W4XQg"
                     },
                     "user": {
-                      "$ref": "#/components/schemas/User"
+                      "$ref": "#/components/schemas/UpdateUser"
                     }
                   }
                 }
@@ -227,6 +248,94 @@
           },
           "401": {
             "description": "Unauthorized",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/subscribe": {
+      "get": {
+        "tags": ["Auth"],
+        "summary": "Get subscribe user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successfully get subscribe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "user": {
+                      "$ref": "#/components/schemas/SubscribeUser"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Post subscribe user",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Subscribe object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "User's email",
+                    "format": "email"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully post subscribe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string", "example": "Subscription" }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "User not found",
             "content": {}
           },
           "500": {
@@ -259,7 +368,7 @@
           }
         }
       },
-      "RegistrationResponse": {
+      "RegistrationUser": {
         "type": "object",
         "properties": {
           "name": {
@@ -292,10 +401,6 @@
       "LoginResponse": {
         "type": "object",
         "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
           "accessToken": {
             "type": "string",
             "description": "The JWT access token"
@@ -305,7 +410,7 @@
             "description": "The JWT refresh token"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "$ref": "#/components/schemas/LoginUser"
           }
         }
       },
@@ -323,10 +428,6 @@
       "RefreshResponse": {
         "type": "object",
         "properties": {
-          "status": {
-            "type": "string",
-            "example": "success"
-          },
           "accessToken": {
             "type": "string",
             "description": "The JWT access token",
@@ -353,7 +454,21 @@
           }
         }
       },
-      "User": {
+      "UpdateUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Update User's name"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "Update URL to the user avatar",
+            "example": "https://example.com/avatar.jpg"
+          }
+        }
+      },
+      "LoginUser": {
         "type": "object",
         "properties": {
           "id": {
@@ -373,6 +488,47 @@
             "type": "string",
             "description": "URL to the user avatar",
             "example": "https://example.com/avatar.jpg"
+          }
+        }
+      },
+      "CurrentUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "avatarURL": {
+            "type": "string",
+            "description": "URL to the user avatar",
+            "example": "https://example.com/avatar.jpg"
+          }
+        }
+      },
+      "SubscribeUser": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "User's name"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "subscribed": {
+            "type": "boolean",
+            "description": "User's subscribe"
           }
         }
       }
