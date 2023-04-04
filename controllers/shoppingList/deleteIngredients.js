@@ -12,4 +12,5 @@ const deleteIngridients = async (req, res) => {
     })
 }
 
+
 module.exports = deleteIngridients;
