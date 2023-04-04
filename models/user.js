@@ -39,7 +39,7 @@ const userSchema = new Schema(
       type: String,
       required: false,
       default: "",
-        },
+    },
 
     favorites: {
       type: [
@@ -49,6 +49,11 @@ const userSchema = new Schema(
         },
       ],
       required: true,
+    },
+    subscribed: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   { versionKey: false, timestamps: true }
