@@ -1,18 +1,18 @@
 const { Schema, model } = require("mongoose");
+const Joi = require("joi");
 
-// I am not sure aboy this schema, may be there is someyhing to add
-const ingredientSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  quantity: {
-    type: String,
-    required: true,
-  },
+const addOwnSchema = Joi.object({
+  title: Joi.string().required(),
+  category: Joi.string().required(),
+  instructions: Joi.string().required(),
+  description: Joi.string().required(),
+  time: Joi.string().required(),
+  ingredients: Joi.array().items({
+    id: Joi.string().required(),
+    measure: Joi.string().required(),
+  }),
+  imageURL: Joi.string().required(),
 });
-
-// schema for adding own recipes
 
 const recipeSchema = new Schema(
   {
@@ -53,7 +53,19 @@ const recipeSchema = new Schema(
       required: true,
     },
     ingredients: {
-      type: [ingredientSchema],
+      type: [
+        {
+          id: {
+            type: Schema.Types.ObjectId,
+            ref: "ingredient",
+          },
+          measure: {
+            type: String,
+            required: true,
+          },
+        },
+      ],
+      required: true,
     },
     imageURL: {
       type: String,
@@ -69,4 +81,4 @@ const recipeSchema = new Schema(
 
 const OwnRecipe = model("ownRecipe", recipeSchema);
 
-module.exports = OwnRecipe;
+module.exports = { OwnRecipe, addOwnSchema };
