@@ -3,45 +3,97 @@ const { CommonRecipe } = require("../../../models");
 const getRecipesByTitleOrIngredients = async (req, res) => {
   const { title, ingredients, page = 1, limit = 12 } = req.query;
 
-  let recipes = null;
   if (title) {
-    recipes = await CommonRecipe.find(
-      { title: { $regex: new RegExp(title, "i") } },
-      "",
+    const [
       {
-        skip: (page - 1) * limit,
-        limit: Number(limit),
-      }
-    );
+        recipes,
+        total: [{ total }],
+      },
+    ] = await CommonRecipe.aggregate([
+      {
+        $facet: {
+          recipes: [
+            {
+              $match: {
+                title: { $regex: new RegExp(title, "i") },
+              },
+            },
+            { $skip: (page - 1) * limit },
+            { $limit: Number(limit) },
+          ],
+          total: [
+            {
+              $match: {
+                title: { $regex: new RegExp(title, "i") },
+              },
+            },
+            { $count: "total" },
+          ],
+        },
+      },
+    ]);
+
+    return res.json({
+      status: "success",
+      code: 200,
+      total,
+      recipes,
+    });
   }
 
   if (ingredients) {
-    recipes = await CommonRecipe.aggregate([
+    const [
       {
-        $lookup: {
-          from: "ingredients",
-          localField: "ingredients.id",
-          foreignField: "_id",
-          as: "ingredients",
+        recipes,
+        total: [{ total }],
+      },
+    ] = await CommonRecipe.aggregate([
+      {
+        $facet: {
+          recipes: [
+            {
+              $lookup: {
+                from: "ingredients",
+                localField: "ingredients.id",
+                foreignField: "_id",
+                as: "ingredients",
+              },
+            },
+            {
+              $match: {
+                "ingredients.ttl": { $regex: new RegExp(ingredients, "i") },
+              },
+            },
+            { $skip: (page - 1) * limit },
+            { $limit: Number(limit) },
+          ],
+          total: [
+            {
+              $lookup: {
+                from: "ingredients",
+                localField: "ingredients.id",
+                foreignField: "_id",
+                as: "ingredients",
+              },
+            },
+            {
+              $match: {
+                "ingredients.ttl": { $regex: new RegExp(ingredients, "i") },
+              },
+            },
+            { $count: "total" },
+          ],
         },
       },
-      {
-        $match: {
-          "ingredients.ttl": { $regex: new RegExp(ingredients, "i") },
-        },
-      },
-      {
-        $skip: (page - 1) * limit,
-      },
-      { $limit: Number(limit) },
     ]);
-  }
 
-  res.json({
-    status: "success",
-    code: 200,
-    recipes,
-  });
+    return res.json({
+      status: "success",
+      code: 200,
+      total,
+      recipes,
+    });
+  }
 };
 
 module.exports = getRecipesByTitleOrIngredients;
