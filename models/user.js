@@ -94,6 +94,10 @@ const updateUserSchema = Joi.object().keys({
   avatarURL: Joi.string(),
 });
 
+const subscribeUserSchema = Joi.object().keys({
+  email: Joi.string().email().required(),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
@@ -102,4 +106,5 @@ module.exports = {
   joiLoginSchema,
   refreshSchema,
   updateUserSchema,
+  subscribeUserSchema,
 };

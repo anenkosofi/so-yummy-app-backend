@@ -6,9 +6,7 @@ const getCategoriesList = async (req, res) => {
     .map(({ category }) => category)
     .filter((category, idx, array) => array.indexOf(category) === idx)
     .sort((a, b) => a.localeCompare(b));
-  res.json({
-    status: "success",
-    code: 200,
+  res.status(200).json({
     categories,
   });
 };
