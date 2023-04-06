@@ -16,7 +16,6 @@ const {
 } = require("../../models");
 
 const router = express.Router();
-const schema = require("../../schemas/");
 
 // auth routes
 router.post("/register", validation(joiRegisterSchema), controllers.register);
