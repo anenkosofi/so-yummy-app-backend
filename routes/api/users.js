@@ -12,6 +12,7 @@ const {
   joiLoginSchema,
   refreshSchema,
   updateUserSchema,
+  subscribeUserSchema,
 } = require("../../models");
 
 const router = express.Router();
@@ -47,7 +48,7 @@ router.get("/subscribe", authenticate, controllers.addSubscription);
 router.post(
   "/subscribe",
   authenticate,
-  validation(schema.subscribeUser),
+  validation(subscribeUserSchema),
   controllers.sendSubscriptionEmail
 );
 

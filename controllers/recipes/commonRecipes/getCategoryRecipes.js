@@ -27,9 +27,7 @@ const getCategoryRecipes = async (req, res) => {
   );
   dessertsRecipes.splice(limit);
 
-  res.json({
-    status: "success",
-    code: 200,
+  res.status(200).json({
     recipes: [
       {
         title: "Breakfast",

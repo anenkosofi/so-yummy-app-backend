@@ -12,6 +12,10 @@
     {
       "name": "Auth",
       "description": "Authorization endpoints"
+    },
+    {
+      "name": "Recipes",
+      "description": "Recipes endpoints"
     }
   ],
   "paths": {
@@ -336,6 +340,129 @@
           },
           "404": {
             "description": "User not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/recipes/category-list": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Getting a list of categories",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "categories": {
+                      "type": "array",
+                      "description": "List of categories",
+                      "example": [
+                        "Beef",
+                        "Breakfast",
+                        "Chicken",
+                        "Dessert",
+                        "Goat",
+                        "Lamb",
+                        "Miscellaneous",
+                        "Pasta",
+                        "Pork",
+                        "Seafood",
+                        "Side",
+                        "Starter",
+                        "Vegan",
+                        "Vegetarian"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/recipes/main-page": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Getting recipes by category for the main page",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Limits on the list of recipes. Maximum quantity no more than 4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "recipes": {
+                      "type": "array",
+                      "description": "List of categories for the main page",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "title": {
+                            "type": "string",
+                            "description": "Title Recipe"
+                          },
+                          "recipes": {
+                            "type": "array",
+                            "description": "Recipe array",
+                            "items": {
+                              "type": "object",
+                              "description": "Recipe"
+                            }
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "title": "Breakfast",
+                          "recipes": "breakfastRecipes"
+                        },
+                        {
+                          "title": "Miscellaneous",
+                          "recipes": "miscellaneousRecipes"
+                        },
+                        {
+                          "title": "Chicken",
+                          "recipes": "chickenRecipes"
+                        },
+                        {
+                          "title": "Desserts",
+                          "recipes": "dessertsRecipes"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
             "content": {}
           },
           "500": {

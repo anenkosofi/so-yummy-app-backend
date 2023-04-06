@@ -4,6 +4,7 @@ const {
   joiLoginSchema,
   refreshSchema,
   updateUserSchema,
+  subscribeUserSchema,
 } = require("./user");
 const { CommonRecipe, addFavoriteSchema } = require("./commonRecipe");
 const { OwnRecipe, addOwnSchema } = require("./ownRecipe");
@@ -16,6 +17,7 @@ module.exports = {
   joiLoginSchema,
   refreshSchema,
   updateUserSchema,
+  subscribeUserSchema,
   CommonRecipe,
   addFavoriteSchema,
   OwnRecipe,
