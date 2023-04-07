@@ -30,7 +30,7 @@ const login = async (req, res) => {
       }
     }
   }
-  const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, { expiresIn: "2m" });
+  const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, { expiresIn: "2h" });
   const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, { expiresIn: "7d"});
   await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
   res.status(201).json({

@@ -4,16 +4,19 @@ const validation = (schema) => {
   return (req, _, next) => {
     const body = req.body;
 
-    if (Object.keys(body).length === 0) {
-      next(BadRequest("missing fields"));
-    }
-
-    const { error } = schema.validate(body);
+    const { error, value } = schema.validate(body, { abortEarly: false });
 
     if (error) {
-      next(BadRequest(error.message));
+      const missingFields = error.details
+        .filter((detail) => detail.type === "any.required")
+        .map((detail) => detail.context.label)
+        .join(", ");
+
+      next(BadRequest(`Missing fields: ${missingFields}`));
+    } else {
+      req.body = value;
+      next();
     }
-    next();
   };
 };
 
