@@ -6,13 +6,13 @@ const { authenticate } = require("../../middlewares");
 const { validation } = require("../../middlewares");
 const { addIngredientsSchema } = require("../../models");
 
-router.post("/", authenticate, controllers.addIngredients);
-router.delete(
-  "/:id",
+router.post(
+  "/",
   authenticate,
   validation(addIngredientsSchema),
-  controllers.deleteIngredients
+  controllers.addIngredients
 );
+router.delete("/:id", authenticate, controllers.deleteIngredients);
 router.get("/", authenticate, controllers.getIngredients);
 
 module.exports = router;
