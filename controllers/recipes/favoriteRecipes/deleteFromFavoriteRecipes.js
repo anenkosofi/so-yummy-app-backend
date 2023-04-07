@@ -15,7 +15,9 @@ const deleteFromFavoriteRecipes = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not Found");
   }
-  res.json({ message: "Recipe deleted" });
+  res
+    .status(200)
+    .json({ message: "Recipe deleted from favorites successfully" });
 };
 
 module.exports = deleteFromFavoriteRecipes;
