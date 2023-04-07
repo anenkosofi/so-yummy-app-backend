@@ -3,7 +3,7 @@ const { Unauthorized, Forbidden } = require("http-errors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY } = process.env;
+const { ACCESS_SECRET_KEY, REFRESH_SECRET_KEY  } = process.env;
 
 const login = async (req, res) => {
   const body = req.body;
@@ -30,10 +30,8 @@ const login = async (req, res) => {
       }
     }
   }
-  const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, { expiresIn: "2h" });
-  const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, {
-    expiresIn: "7d",
-  });
+  const accessToken = jwt.sign(payload, ACCESS_SECRET_KEY, { expiresIn: "2m" });
+  const refreshToken = jwt.sign(payload, REFRESH_SECRET_KEY, { expiresIn: "7d"});
   await User.findByIdAndUpdate(user._id, { accessToken, refreshToken });
   res.status(201).json({
     accessToken,
