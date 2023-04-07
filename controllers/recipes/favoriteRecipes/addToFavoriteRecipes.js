@@ -5,7 +5,6 @@ const { HttpError } = require("../../../helpers");
 const addToFavoriteRecipes = async (req, res) => {
   const { favorite } = req.body;
   const { _id: owner } = req.user;
-
   const user = await User.findOneAndUpdate(
     { _id: owner },
     { $push: { favorites: favorite } },
