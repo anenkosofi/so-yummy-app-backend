@@ -14,7 +14,6 @@ const userSchema = new Schema(
       minLength: 1,
       maxLength: 12,
       trim: true,
-      required: [true, "Name is required"],
       match: [nameRegExp, "Please fill a valid name"],
     },
     email: {
@@ -94,6 +93,10 @@ const updateUserSchema = Joi.object().keys({
   avatarURL: Joi.string(),
 });
 
+const subscribeUserSchema = Joi.object().keys({
+  email: Joi.string().email().required(),
+});
+
 const User = model("user", userSchema);
 
 module.exports = {
@@ -102,4 +105,5 @@ module.exports = {
   joiLoginSchema,
   refreshSchema,
   updateUserSchema,
+  subscribeUserSchema,
 };

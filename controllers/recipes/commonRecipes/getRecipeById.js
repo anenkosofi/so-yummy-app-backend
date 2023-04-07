@@ -3,14 +3,12 @@ const { HttpError } = require("../../../helpers");
 
 const getRecipeById = async (req, res) => {
   const { id } = req.params;
-  const result = await CommonRecipe.findOne({ _id: id });
-  if (!result) {
+  const recipe = await CommonRecipe.findOne({ _id: id });
+  if (!recipe) {
     throw HttpError(404, "Not Found");
   }
-  res.json({
-    status: "success",
-    code: 200,
-    result,
+  res.status(200).json({
+    recipe,
   });
 };
 
