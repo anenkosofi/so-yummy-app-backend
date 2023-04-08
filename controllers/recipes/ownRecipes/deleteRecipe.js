@@ -10,10 +10,8 @@ const deleteRecipe = async (req, res) => {
     throw HttpError(404, "Not Found");
   }
 
-  res.json({
-    status: "success",
-    code: 200,
-    recipe,
+  res.status(200).json({
+    message: "Recipe deleted successfully",
   });
 };
 

@@ -5,9 +5,7 @@ const getAllRecipes = async (req, res) => {
 
   const recipes = await OwnRecipe.find({ owner });
 
-  res.json({
-    status: "success",
-    code: 200,
+  res.status(200).json({
     recipes,
   });
 };

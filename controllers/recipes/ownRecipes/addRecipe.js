@@ -10,8 +10,6 @@ const addRecipe = async (req, res) => {
   });
 
   res.status(201).json({
-    status: "success",
-    code: 201,
     recipe: newRecipe,
   });
 };
