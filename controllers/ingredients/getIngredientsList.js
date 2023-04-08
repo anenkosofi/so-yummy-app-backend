@@ -2,9 +2,7 @@ const { Ingredient } = require("../../models");
 
 const getIngredientsList = async (req, res) => {
   const ingredients = await Ingredient.find({});
-  res.json({
-    status: "success",
-    code: 200,
+  res.status(200).json({
     ingredients,
   });
 };

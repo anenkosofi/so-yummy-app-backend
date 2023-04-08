@@ -16,6 +16,10 @@
     {
       "name": "Recipes",
       "description": "Recipes endpoints"
+    },
+    {
+      "name": "Ingredients",
+      "description": "Ingredients endpoints"
     }
   ],
   "paths": {
@@ -758,7 +762,7 @@
       },
       "get": {
         "tags": ["Recipes"],
-        "summary": "Getting a recipe created by the User",
+        "summary": "Getting a recipes created by the User",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "responses": {
@@ -987,6 +991,205 @@
                                 "thb": {
                                   "type": "string",
                                   "description": "Ingredients's thumb"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/ingredients/list": {
+      "get": {
+        "tags": ["Ingredients"],
+        "summary": "Getting a list of ingredients",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ingredients": {
+                      "type": "array",
+                      "description": "Ingredients's array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Ingredients's id"
+                          },
+                          "ttl": {
+                            "type": "string",
+                            "description": "Ingredients's title"
+                          },
+                          "desc": {
+                            "type": "string",
+                            "description": "Ingredients's description"
+                          },
+                          "t": {
+                            "type": "string"
+                          },
+                          "thb": {
+                            "type": "string",
+                            "description": "Ingredients's thumb"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/popular-recipe": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Getting a popular recipes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "recipes": {
+                      "type": "array",
+                      "description": "Array recipes",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Recipe's id"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "Recipe's title"
+                          },
+                          "category": {
+                            "type": "string",
+                            "description": "Recipe's category",
+                            "enum": [
+                              "Beef",
+                              "Breakfast",
+                              "Chicken",
+                              "Dessert",
+                              "Goat",
+                              "Lamb",
+                              "Miscellaneous",
+                              "Pasta",
+                              "Pork",
+                              "Seafood",
+                              "Side",
+                              "Starter",
+                              "Vegan",
+                              "Vegetarian"
+                            ]
+                          },
+                          "area": {
+                            "type": "string",
+                            "description": "Recipe's area"
+                          },
+                          "instructions": {
+                            "type": "string",
+                            "description": "Recipe's instructions"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Recipe's description"
+                          },
+                          "thumb": {
+                            "type": "string",
+                            "description": "Recipe's thumb"
+                          },
+                          "preview": {
+                            "type": "string",
+                            "description": "Recipe's preview"
+                          },
+                          "time": {
+                            "type": "string",
+                            "description": "Recipe's time"
+                          },
+                          "popularity": {
+                            "type": "integer",
+                            "description": "Recipe's popularity"
+                          },
+                          "favorites": {
+                            "type": "array",
+                            "description": "Recipe favorites",
+                            "items": {}
+                          },
+                          "likes": {
+                            "type": "array",
+                            "description": "Recipe likes",
+                            "items": {}
+                          },
+                          "youtube": {
+                            "type": "string",
+                            "description": "Recipe's youtube link"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "description": "Recipe tags",
+                            "items": {}
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "Recipe's createdAt"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "Recipe's updatedAt"
+                          },
+                          "ingredients": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "description": "Ingredients's array",
+                              "properties": {
+                                "_id": {
+                                  "type": "string",
+                                  "description": "User's id"
+                                },
+                                "id": {
+                                  "type": "string",
+                                  "description": "Ingredients's id"
+                                },
+                                "measure": {
+                                  "type": "string",
+                                  "description": "Ingredients's measure"
                                 }
                               }
                             }
