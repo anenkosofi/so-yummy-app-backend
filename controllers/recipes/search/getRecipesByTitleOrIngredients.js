@@ -33,9 +33,7 @@ const getRecipesByTitleOrIngredients = async (req, res) => {
       },
     ]);
 
-    return res.json({
-      status: "success",
-      code: 200,
+    return res.status(200).json({
       total,
       recipes,
     });
@@ -87,9 +85,7 @@ const getRecipesByTitleOrIngredients = async (req, res) => {
       },
     ]);
 
-    return res.json({
-      status: "success",
-      code: 200,
+    return res.status(200).json({
       total,
       recipes,
     });

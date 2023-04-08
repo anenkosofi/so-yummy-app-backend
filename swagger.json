@@ -713,6 +713,302 @@
           }
         }
       }
+    },
+    "/ownRecipes": {
+      "post": {
+        "tags": ["Recipes"],
+        "summary": "Adding a recipe created by the User",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Recipe's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Recipe added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Recipe not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      },
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Getting a recipe created by the User",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "201": {
+            "description": "Recipe geted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Recipe not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/ownRecipes/{id}": {
+      "delete": {
+        "tags": ["Recipes"],
+        "summary": "Delete a recipe created by the User",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Recipe ID"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "201": {
+            "description": "Recipe deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Recipe deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Recipe not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Search for recipes by keyword in the title or by ingredient",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "title",
+            "type": "string",
+            "description": "Keyword in title"
+          },
+          {
+            "in": "query",
+            "name": "ingredients",
+            "type": "string",
+            "description": "Ingredient in the recipe"
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "type": "integer",
+            "description": "Page number with the list of recipes. Default: Page=1. Page value must be > 0"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "type": "integer",
+            "description": "Recipe limit quantity on the one page. Default: Limit=12."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "description": "Total numder of recipes"
+                    },
+                    "recipes": {
+                      "type": "array",
+                      "description": "Array recipes",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "_id": {
+                            "type": "string",
+                            "description": "Recipe's id"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "Recipe's title"
+                          },
+                          "category": {
+                            "type": "string",
+                            "description": "Recipe's category",
+                            "enum": [
+                              "Beef",
+                              "Breakfast",
+                              "Chicken",
+                              "Dessert",
+                              "Goat",
+                              "Lamb",
+                              "Miscellaneous",
+                              "Pasta",
+                              "Pork",
+                              "Seafood",
+                              "Side",
+                              "Starter",
+                              "Vegan",
+                              "Vegetarian"
+                            ]
+                          },
+                          "area": {
+                            "type": "string",
+                            "description": "Recipe's area"
+                          },
+                          "instructions": {
+                            "type": "string",
+                            "description": "Recipe's instructions"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Recipe's description"
+                          },
+                          "thumb": {
+                            "type": "string",
+                            "description": "Recipe's thumb"
+                          },
+                          "preview": {
+                            "type": "string",
+                            "description": "Recipe's preview"
+                          },
+                          "time": {
+                            "type": "string",
+                            "description": "Recipe's time"
+                          },
+                          "popularity": {
+                            "type": "integer",
+                            "description": "Recipe's popularity"
+                          },
+                          "favorites": {
+                            "type": "array",
+                            "description": "Recipe favorites",
+                            "items": {}
+                          },
+                          "likes": {
+                            "type": "array",
+                            "description": "Recipe likes",
+                            "items": {}
+                          },
+                          "youtube": {
+                            "type": "string",
+                            "description": "Recipe's youtube link"
+                          },
+                          "tags": {
+                            "type": "array",
+                            "description": "Recipe tags",
+                            "items": {}
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "Recipe's createdAt"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "Recipe's updatedAt"
+                          },
+                          "ingredients": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "description": "Ingredients's array",
+                              "properties": {
+                                "id": {
+                                  "type": "string",
+                                  "description": "Ingredients's id"
+                                },
+                                "ttl": {
+                                  "type": "string",
+                                  "description": "Ingredients's title"
+                                },
+                                "desc": {
+                                  "type": "string",
+                                  "description": "Ingredients's description"
+                                },
+                                "t": {
+                                  "type": "string"
+                                },
+                                "thb": {
+                                  "type": "string",
+                                  "description": "Ingredients's thumb"
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recipe not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
@@ -898,6 +1194,172 @@
           "subscribed": {
             "type": "boolean",
             "description": "User's subscribe"
+          }
+        }
+      },
+      "RecipeRequest": {
+        "type": "object",
+        "required": [
+          "title",
+          "category",
+          "instructions",
+          "description",
+          "time",
+          "ingredients",
+          "imageURL"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Recipe's title"
+          },
+          "category": {
+            "type": "string",
+            "description": "Recipe's category",
+            "enum": [
+              "Beef",
+              "Breakfast",
+              "Chicken",
+              "Dessert",
+              "Goat",
+              "Lamb",
+              "Miscellaneous",
+              "Pasta",
+              "Pork",
+              "Seafood",
+              "Side",
+              "Starter",
+              "Vegan",
+              "Vegetarian"
+            ]
+          },
+          "instructions": {
+            "type": "string",
+            "description": "Recipe's instructions"
+          },
+          "description": {
+            "type": "string",
+            "description": "Recipe's description"
+          },
+          "time": {
+            "type": "string",
+            "description": "Recipe's time"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Ingredients's array",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Ingredients's id"
+                },
+                "measure": {
+                  "type": "string",
+                  "description": "Ingredients's measure"
+                }
+              }
+            }
+          },
+          "imageURL": {
+            "type": "string",
+            "description": "Recipe's imageURL"
+          }
+        },
+        "example": {
+          "title": "Summer Pudding",
+          "category": "Dessert",
+          "instructions": "Bring out the juices: Wash fruit and gently dry on kitchen paper – keep strawberries separate...",
+          "description": "A refreshing dessert made with fresh berries and bread soaked in juice, perfect for summer.",
+          "time": "380",
+          "ingredients": [
+            {
+              "id": "640c2dd963a319ea671e3773",
+              "measure": "300g"
+            }
+          ],
+          "imageURL": "https://res.cloudinary.com/ddbvbv5sp/image/upload/v1678560621/nf9mpueezfmu9wt0ykqm.jpg"
+        }
+      },
+      "RecipeResponse": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Recipe's title"
+          },
+          "category": {
+            "type": "string",
+            "description": "Recipe's category",
+            "enum": [
+              "Beef",
+              "Breakfast",
+              "Chicken",
+              "Dessert",
+              "Goat",
+              "Lamb",
+              "Miscellaneous",
+              "Pasta",
+              "Pork",
+              "Seafood",
+              "Side",
+              "Starter",
+              "Vegan",
+              "Vegetarian"
+            ]
+          },
+          "instructions": {
+            "type": "string",
+            "description": "Recipe's instructions"
+          },
+          "description": {
+            "type": "string",
+            "description": "Recipe's description"
+          },
+          "time": {
+            "type": "string",
+            "description": "Recipe's time"
+          },
+          "ingredients": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "Ingredients's array",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Ingredients's id"
+                },
+                "measure": {
+                  "type": "string",
+                  "description": "Ingredients's measure"
+                }
+              }
+            }
+          },
+          "imageURL": {
+            "type": "string",
+            "description": "Recipe's imageURL"
+          },
+          "owner": {
+            "type": "string",
+            "description": "Recipe's owner"
+          },
+          "_id": {
+            "type": "string",
+            "description": "Recipe's id"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Recipe's createdAt"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Recipe's updatedAt"
+          },
+          "__v": {
+            "type": "integer"
           }
         }
       }
