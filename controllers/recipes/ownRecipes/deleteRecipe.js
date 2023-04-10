@@ -1,5 +1,5 @@
 const { OwnRecipe } = require("../../../models");
-const { HttpError } = require("../../../helpers");
+const { NotFound } = require("http-errors");
 
 const deleteRecipe = async (req, res) => {
   const { _id: owner } = req.user;
@@ -7,7 +7,7 @@ const deleteRecipe = async (req, res) => {
 
   const recipe = await OwnRecipe.findByIdAndRemove({ _id: id, owner });
   if (!recipe) {
-    throw HttpError(404, "Not Found");
+    throw new NotFound(`Recipe with id: ${id} is not found`);
   }
 
   res.status(200).json({

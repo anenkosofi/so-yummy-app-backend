@@ -1,5 +1,5 @@
 const { User } = require("../../../models");
-const { HttpError } = require("../../../helpers");
+const { NotFound } = require("http-errors");
 
 const deleteFromFavoriteRecipes = async (req, res) => {
   const { _id: owner } = req.user;
@@ -13,7 +13,7 @@ const deleteFromFavoriteRecipes = async (req, res) => {
     }
   );
   if (!result) {
-    throw HttpError(404, "Not Found");
+    throw new NotFound(`Recipe with id: ${id} is not found`);
   }
   res
     .status(200)
