@@ -1,6 +1,6 @@
 // const { CommonRecipe } = require("../../../models");
 const { User } = require("../../../models");
-const { HttpError } = require("../../../helpers");
+const { NotFound } = require("http-errors");
 
 const addToFavoriteRecipes = async (req, res) => {
   const { favorite } = req.body;
@@ -11,7 +11,7 @@ const addToFavoriteRecipes = async (req, res) => {
     { new: true }
   );
   if (!user) {
-    throw HttpError(404, "Not Found");
+    throw new NotFound(`Recipe with id: ${id} is not found`);
   }
 
   res.status(201).json({ message: "Recipe added to favorites successfully" });

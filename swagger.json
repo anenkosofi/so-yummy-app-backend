@@ -7,7 +7,10 @@
   },
   "consumes": ["application/json", "multipart/form-data"],
   "produces": ["application/json", "multipart/form-data"],
-  "servers": [{ "url": "http://localhost:8080/api/" }],
+  "servers": [
+    { "url": "http://localhost:8080/api/" },
+    { "url": "https://so-yummy-app-backend.onrender.com/api/" }
+  ],
   "tags": [
     {
       "name": "Auth",
@@ -580,11 +583,14 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": ["favorite"],
                 "properties": {
                   "favorite": {
-                    "id": { "type": "string", "description": "Recipe ID" }
+                    "type": "string",
+                    "description": "Recipe ID"
                   }
-                }
+                },
+                "example": { "favorite": "640cd5ac2d9fecf12e8898a9" }
               }
             }
           }
