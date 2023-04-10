@@ -1,5 +1,5 @@
 const { ShoppingList } = require("../../models");
-const { HttpError } = require("../../helpers");
+const { NotFound } = require("http-errors");
 
 const deleteIngredients = async (req, res) => {
   const { _id: owner } = req.user;
@@ -8,12 +8,10 @@ const deleteIngredients = async (req, res) => {
   const ingredient = await ShoppingList.findByIdAndRemove({ _id: id, owner });
 
   if (!ingredient) {
-    throw HttpError(404, `Contact with id=${id} is not found`);
+    throw new NotFound(`Ingredient with id: ${id} is not found`);
   }
-  res.json({
-    status: "success",
-    code: 200,
-    ingredient,
+  res.status(201).json({
+    message: "Ingredient deleted successfully",
   });
 };
 
