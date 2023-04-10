@@ -10,7 +10,7 @@ const deleteIngredients = async (req, res) => {
   if (!ingredient) {
     throw new NotFound(`Ingredient with id: ${id} is not found`);
   }
-  res.status(201).json({
+  res.json({
     message: "Ingredient deleted successfully",
   });
 };
