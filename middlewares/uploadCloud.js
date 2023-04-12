@@ -1,4 +1,6 @@
 const cloudinary = require("cloudinary").v2;
+const fs = require("fs");
+
 require("dotenv").config();
 
 cloudinary.config({
@@ -20,11 +22,15 @@ const cloudinaryUpload = (filename, path) => {
       },
       (error, result) => {
         if (error) {
-          // console.log("Cloudinary error:", error);
           reject(error);
         } else {
-          // console.log("Cloudinary response:", result);
           const avatarURL = result.secure_url;
+          // Delete file from the temporary folder
+          fs.unlink(path, (err) => {
+            if (err) {
+              console.error(err);
+            }
+          });
           resolve(avatarURL);
         }
       }

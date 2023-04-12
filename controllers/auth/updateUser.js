@@ -9,6 +9,7 @@ const updateUser = async (req, res) => {
   if (req.file) {
     const { path, filename } = req.file;
     avatarURL = await cloudinaryUpload(filename, path);
+    req.body.avatarURL = avatarURL; // add avatarURL to req.body
   }
 
   const updatedFields = {};
