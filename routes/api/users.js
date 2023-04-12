@@ -43,7 +43,7 @@ router.patch(
   validation(updateUserSchema),
   controllers.updateUser
 );
-router.get("/subscribe", authenticate, controllers.addSubscription);
+router.post("/subscribe", authenticate, controllers.addSubscription);
 router.post(
   "/subscribe",
   authenticate,
