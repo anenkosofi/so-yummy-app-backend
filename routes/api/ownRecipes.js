@@ -8,6 +8,8 @@ const { addOwnSchema } = require("../../models/ownRecipe");
 
 router.get("/", authenticate, controllers.getAllRecipes);
 
+router.get("/:id", authenticate, controllers.getRecipeById);
+
 router.post("/", authenticate, validation(addOwnSchema), controllers.addRecipe);
 
 router.delete("/:id", authenticate, controllers.deleteRecipe);
