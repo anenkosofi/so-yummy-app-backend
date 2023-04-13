@@ -11,7 +11,7 @@ const addOwnSchema = Joi.object({
     id: Joi.string().required(),
     measure: Joi.string().required(),
   }),
-  imageURL: Joi.string().required(),
+  imageURL: Joi.string().optional(),
 });
 
 const recipeSchema = new Schema(
@@ -69,7 +69,7 @@ const recipeSchema = new Schema(
     },
     imageURL: {
       type: String,
-      required: true,
+      required: false,
     },
     owner: {
       type: Schema.Types.ObjectId,

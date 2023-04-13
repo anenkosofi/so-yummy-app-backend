@@ -9,35 +9,29 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET,
 });
 
-const cloudinaryUpload = (filename, path) => {
+const recipeImageUpload = (filename, path) => {
   return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(
-      path,
+   cloudinary.uploader.upload(
+    path,
       {
-        public_id: `avatars/${filename}`,
-        width: 103,
-        height: 103,
-        crop: 'fill',
-        gravity: 'face',
+        public_id: `recipes/${filename}`,
+        folder: "recipes",
       },
       (error, result) => {
         if (error) {
           reject(error);
         } else {
-          const avatarURL = result.secure_url;
-          // Delete file from the temporary folder
+          const imageURL = result.secure_url;
           fs.unlink(path, (err) => {
             if (err) {
               console.error(err);
             }
           });
-          resolve(avatarURL);
+          resolve(imageURL);
         }
       }
     );
   });
 };
 
-
-
-module.exports = cloudinaryUpload
+module.exports = recipeImageUpload;
