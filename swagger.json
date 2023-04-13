@@ -269,41 +269,6 @@
       }
     },
     "/users/subscribe": {
-      "get": {
-        "tags": ["Auth"],
-        "summary": "Get subscribe user",
-        "parameters": [],
-        "security": [{ "Bearer": [] }],
-        "responses": {
-          "200": {
-            "description": "Successfully get subscribe",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "user": {
-                      "$ref": "#/components/schemas/SubscribeUser"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "content": {}
-          },
-          "404": {
-            "description": "User not found",
-            "content": {}
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {}
-          }
-        }
-      },
       "post": {
         "tags": ["Auth"],
         "summary": "Post subscribe user",
@@ -329,13 +294,19 @@
         },
         "responses": {
           "201": {
-            "description": "Successfully post subscribe",
+            "description": "Successful adding subscription",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": { "type": "string", "example": "Subscription" }
+                    "message": {
+                      "type": "string",
+                      "example": "Subscription successfully added and subscription message sent to email"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/SubscribeUser"
+                    }
                   }
                 }
               }
