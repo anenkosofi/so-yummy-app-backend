@@ -8,7 +8,9 @@ const { addOwnSchema } = require("../../models/ownRecipe");
 
 router.get("/", authenticate, controllers.getAllRecipes);
 
-router.post("/", authenticate, upload.single("image"),  validation(addOwnSchema), controllers.addRecipe);
+router.get("/:id", authenticate, controllers.getRecipeById);
+
+router.post("/", authenticate, validation(addOwnSchema), controllers.addRecipe);
 
 router.delete("/:id", authenticate, controllers.deleteRecipe);
 
