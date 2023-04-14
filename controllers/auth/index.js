@@ -9,7 +9,6 @@ const updateUser = require("./updateUser");
 const updateAvatarToCloud = require("./updateCloudAvatar");
 
 const getCurrent = require("./getCurrentUser");
-const addSubscription = require("./addSubscription");
 const sendSubscriptionEmail = require("./sendSubsciption");
 
 module.exports = {
@@ -21,6 +20,5 @@ module.exports = {
   refresh: ctrl(refresh),
   updateUser: ctrl(updateUser),
   updateAvatarToCloud: ctrl(updateAvatarToCloud),
-  addSubscription: ctrl(addSubscription),
   sendSubscriptionEmail: ctrl(sendSubscriptionEmail),
 };

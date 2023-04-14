@@ -1,16 +1,18 @@
 const { Schema, model } = require("mongoose");
 const Joi = require("joi");
 
+const ingredientSchema = Joi.object({
+  id: Joi.string().required(),
+  measure: Joi.string().required(),
+});
+
 const addOwnSchema = Joi.object({
   title: Joi.string().required(),
   category: Joi.string().required(),
   instructions: Joi.string().required(),
   description: Joi.string().required(),
   time: Joi.string().required(),
-  ingredients: Joi.array().items({
-    id: Joi.string().required(),
-    measure: Joi.string().required(),
-  }),
+  ingredients: Joi.array().items(ingredientSchema).min(1).required(),
   imageURL: Joi.string().optional(),
 });
 
