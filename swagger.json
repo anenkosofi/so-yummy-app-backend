@@ -703,9 +703,8 @@
         "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Recipe's object",
-          "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "$ref": "#/components/schemas/RecipeRequest"
               }
@@ -769,6 +768,49 @@
       }
     },
     "/ownRecipes/{id}": {
+      "get": {
+        "tags": ["Recipes"],
+        "summary": "Getting one recipe by id created by the User",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "description": "Recipe ID"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "recipe": {
+                      "type": "object",
+                      "description": "Recipe"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {}
+          },
+          "404": {
+            "description": "Recipe not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {}
+          }
+        }
+      },
       "delete": {
         "tags": ["Recipes"],
         "summary": "Delete a recipe created by the User",
@@ -1589,8 +1631,7 @@
           "instructions",
           "description",
           "time",
-          "ingredients",
-          "imageURL"
+          "ingredients"
         ],
         "properties": {
           "title": {
@@ -1631,24 +1672,16 @@
           },
           "ingredients": {
             "type": "array",
+            "description": "Ingredient's array",
             "items": {
-              "type": "object",
-              "description": "Ingredients's array",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "description": "Ingredients's id"
-                },
-                "measure": {
-                  "type": "string",
-                  "description": "Ingredients's measure"
-                }
-              }
-            }
+              "$ref": "#/components/schemas/Ingredient"
+            },
+            "minItems": 1
           },
-          "imageURL": {
+          "image": {
             "type": "string",
-            "description": "Recipe's imageURL"
+            "format": "binary",
+            "description": "Select imageURL file"
           }
         },
         "example": {
@@ -1709,7 +1742,7 @@
             "type": "array",
             "items": {
               "type": "object",
-              "description": "Ingredients's array",
+              "description": "Ingredients's object",
               "properties": {
                 "id": {
                   "type": "string",
@@ -1746,6 +1779,21 @@
             "type": "integer"
           }
         }
+      },
+      "Ingredient": {
+        "type": "object",
+        "description": "Ingredients's object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Ingredients's id"
+          },
+          "measure": {
+            "type": "string",
+            "description": "Ingredients's measure"
+          }
+        },
+        "required": ["id", "measure"]
       }
     },
     "securitySchemes": {
