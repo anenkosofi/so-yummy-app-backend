@@ -5,8 +5,6 @@
     "title": "Swagger so-yummy-app-backend",
     "description": "This is end-points documentation So-yummy-app-backend for swagger-ui-express"
   },
-  "consumes": ["application/json", "multipart/form-data"],
-  "produces": ["application/json", "multipart/form-data"],
   "servers": [
     { "url": "http://localhost:8080/api/" },
     { "url": "https://so-yummy-app-backend.onrender.com/api/" }
@@ -343,6 +341,9 @@
                     "categories": {
                       "type": "array",
                       "description": "List of categories",
+                      "items": {
+                        "type": "string"
+                      },
                       "example": [
                         "Beef",
                         "Breakfast",
@@ -384,7 +385,7 @@
           {
             "in": "query",
             "name": "limit",
-            "type": "integer",
+            "schema": { "type": "integer" },
             "description": "Limits on the list of recipes. Maximum quantity no more than 4"
           }
         ],
@@ -459,13 +460,14 @@
           {
             "in": "path",
             "name": "category",
+            "schema": { "type": "string" },
             "required": true,
             "description": "Category on the list of recipes: Beef, Breakfast, Chicken, Dessert, Goat, Lamb, Miscellaneous, Pasta, Pork, Seafood, Side, Starter, Vegan, Vegetarian"
           },
           {
             "in": "query",
             "name": "page",
-            "type": "integer",
+            "schema": { "type": "integer" },
             "description": "Page number with the list of category recipes. Page value must be > 0"
           }
         ],
@@ -509,6 +511,7 @@
           {
             "in": "path",
             "name": "id",
+            "schema": { "type": "string" },
             "required": true,
             "description": "Recipe ID"
           }
@@ -604,13 +607,13 @@
           {
             "in": "query",
             "name": "page",
-            "type": "integer",
+            "schema": { "type": "integer" },
             "description": "Page number with the list of User recipes. Default: Page=1. Page value must be > 0"
           },
           {
             "in": "query",
             "name": "limit",
-            "type": "integer",
+            "schema": { "type": "integer" },
             "description": "Recipe limit quantity on the one page. Default: Limit=4."
           }
         ],
@@ -658,6 +661,7 @@
           {
             "in": "path",
             "name": "id",
+            "schema": { "type": "string" },
             "required": true,
             "description": "Recipe ID"
           }
@@ -775,6 +779,7 @@
           {
             "in": "path",
             "name": "id",
+            "schema": { "type": "string" },
             "required": true,
             "description": "Recipe ID"
           }
@@ -818,6 +823,7 @@
           {
             "in": "path",
             "name": "id",
+            "schema": { "type": "string" },
             "required": true,
             "description": "Recipe ID"
           }
@@ -863,25 +869,25 @@
           {
             "in": "query",
             "name": "title",
-            "type": "string",
+            "schema": { "type": "string" },
             "description": "Keyword in title"
           },
           {
             "in": "query",
             "name": "ingredients",
-            "type": "string",
+            "schema": { "type": "string" },
             "description": "Ingredient in the recipe"
           },
           {
             "in": "query",
             "name": "page",
-            "type": "integer",
+            "schema": { "type": "integer" },
             "description": "Page number with the list of recipes. Default: Page=1. Page value must be > 0"
           },
           {
             "in": "query",
             "name": "limit",
-            "type": "integer",
+            "schema": { "type": "integer" },
             "description": "Recipe limit quantity on the one page. Default: Limit=12."
           }
         ],
@@ -1399,6 +1405,7 @@
           {
             "in": "path",
             "name": "id",
+            "schema": { "type": "string" },
             "required": true,
             "description": "Ingredient ID"
           }
@@ -1676,6 +1683,16 @@
             "items": {
               "$ref": "#/components/schemas/Ingredient"
             },
+            "example": [
+              {
+                "id": "640c2dd963a319ea671e3773",
+                "measure": "300g"
+              },
+              {
+                "id": "640c2dd963a319ea671e3773",
+                "measure": "150g"
+              }
+            ],
             "minItems": 1
           },
           "image": {
